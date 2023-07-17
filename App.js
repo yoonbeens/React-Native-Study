@@ -13,6 +13,10 @@ export default function App() {
     setModalIsVisible(true);
   };
 
+  const endAddGoalHandler = () => {
+    setModalIsVisible(false);
+  };
+
   //버튼을 누르면 할 일 목록을 추가하는 함수
   const addGoalHandler = (enteredGoalText) => {
     // console.log(enteredGoalText);
@@ -22,7 +26,7 @@ export default function App() {
       ...currentTodoGoals,
       { text: enteredGoalText, id: Math.random().toString() },
     ]);
-    // console.log(todoGoals);
+    endAddGoalHandler();
   };
 
   const deleteGoalHandler = (id) => {
@@ -38,7 +42,11 @@ export default function App() {
         color='#5e0acc'
         onPress={startAddGoalHandler}
       />
-      {modalIsVisible && <GoalInput onAddGoal={addGoalHandler} />}
+      <GoalInput
+        visible={modalIsVisible}
+        onAddGoal={addGoalHandler}
+        onCancel={endAddGoalHandler}
+      />
       <View style={styles.goalsContainer}>
         {/* ScrollView는 전체 화면이 렌더링 될 때 안의 항목들을 전부 렌더링합니다
             이로 인해, 성능 저하가 발생할 수 있습니다.
